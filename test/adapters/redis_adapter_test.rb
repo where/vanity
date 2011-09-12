@@ -1,5 +1,6 @@
 require 'test/test_helper'
 
+# this appears to be very poorly tested
 class RedisAdapterTest < Test::Unit::TestCase
   def test_warn_on_disconnect_error
     if defined?(Redis)

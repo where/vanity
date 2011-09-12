@@ -68,13 +68,13 @@ module Vanity
 
       def metric_track(metric, timestamp, identity, values)
         values.each_with_index do |v,i|
-          @metrics.incrby "#{metric}:#{timestamp.to_date}:value:#{i}", v
+          @metrics.incrby "#{metric}:#{timestamp.to_date.to_s(:db)}:value:#{i}", v
         end
         @metrics["#{metric}:last_update_at"] = Time.now.to_i
       end
 
       def metric_values(metric, from, to)
-        single = @metrics.mget(*(from.to_date..to.to_date).map { |date| "#{metric}:#{date}:value:0" }) || []
+        single = @metrics.mget(*(from.to_date..to.to_date).map { |date| "#{metric}:#{date.to_s(:db)}:value:0" }) || []
         single.map { |v| [v] }
       end
 
